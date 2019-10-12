@@ -5,7 +5,8 @@ function init(config) {
 	this.types = {
 		NUMBERS: 'numbers',
 		ACCOUNT: 'accounts',
-		FILES: 'files'
+		FILES: 'files',
+		MESSAGING: 'messaging'
 	};
 
 	this.config = config;
@@ -172,6 +173,21 @@ function numberConfigureBusy(number, SETTINGS = this) {
 	});
 }
 
+function smsSend(number_from, number_to, message, SETTINGS = this) {
+	return new Promise(function(resolve, reject) {
+		apiPost(SETTINGS.types.MESSAGING, `sms`, {
+			to: number_to,
+			from: number_from,
+			message: message
+		}, SETTINGS)
+		.then((r) => {
+			resolve(r);
+		})
+		.catch((e) => { return e; })
+	});
+}
+
+
 module.exports =  {
 	init,
 	accountGetDetails,
@@ -182,6 +198,8 @@ module.exports =  {
 	numberAllocate,
 	numberConfigure,
 	numberDelete,
+	//
+	smsSend,
 	//
 	// Helpers
 	//
