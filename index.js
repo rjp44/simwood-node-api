@@ -5,7 +5,8 @@ function init(config) {
 	this.types = {
 		NUMBERS: 'numbers',
 		ACCOUNT: 'accounts',
-		FILES: 'files'
+		FILES: 'files',
+    MESSAGING: 'messaging',
 	};
 
 	this.config = config;
@@ -36,7 +37,7 @@ function apiPut(type, endpoint, body, {stub, config}) {
 function apiPost(type, endpoint, body, {stub, config}) {
 	const apistub = `${type}/${config.account}`;
 	const url = `${stub}/${apistub}/${endpoint}`;
-	
+
 	const options = {
 		method: 'POST',
 		uri: url,
@@ -135,6 +136,26 @@ function numberDelete(number, SETTINGS = this) {
 	});
 }
 
+
+function messagingSmsSend(from, to, text, options, SETTINGS = this) {
+	return new Promise(function(resolve, reject) {
+		const message = {
+      from,
+      to,
+      message: text,
+      ...options
+    };
+
+		apiPost(SETTINGS.types.MESSAGING, `sms`, message, SETTINGS)
+		.then((r) => {
+			resolve(r);
+		})
+		.catch((e) => e)
+
+	});
+}
+
+
 function numberConfigureRedirectPSTN(number, targetNumber, params, SETTINGS = this) {
 	return new Promise(function(resolve, reject) {
 		const config = {
@@ -172,6 +193,10 @@ function numberConfigureBusy(number, SETTINGS = this) {
 	});
 }
 
+
+
+
+
 module.exports =  {
 	init,
 	accountGetDetails,
@@ -182,6 +207,8 @@ module.exports =  {
 	numberAllocate,
 	numberConfigure,
 	numberDelete,
+  //
+  messagingSmsSend,
 	//
 	// Helpers
 	//
