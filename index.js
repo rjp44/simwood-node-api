@@ -135,12 +135,14 @@ function numberDelete(number, SETTINGS = this) {
 	});
 }
 
-function numberConfigureRedirectPSTN(number, targetNumber, SETTINGS = this) {
+function numberConfigureRedirectPSTN(number, targetNumber, params, SETTINGS = this) {
 	return new Promise(function(resolve, reject) {
 		const config = {
 		 "routing": { "default": [ [ {
 		 	"type": "pstn",
-		 	"number": targetNumber
+		 	"number": targetNumber,
+		 	"delay": params.delay || 1,
+		 	"timeout": params.timeout || 20
 		 } ] ] }
 		};
 
