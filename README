@@ -1,0 +1,22 @@
+README
+
+For this you need a Simwood account.
+
+A typical example would be:
+
+
+require('dotenv').config();
+
+const CREDENTIALS = {
+	account:  process.env.SIMWOOD_ACCOUNT, 
+	username: process.env.SIMWOOD_USERNAME, 
+	password: process.env.SIMWOOD_PASSWORD
+};
+
+const simwood = require('simwood-api-node').init(CREDENTIALS);
+
+
+simwood.accountGetDetails()
+.then((info) => console.log(`You have ${info.data.balance} left`))
+.catch((err) => console.log(`ERROR: ${err}`));
+
