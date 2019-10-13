@@ -12,7 +12,7 @@ function init(config) {
   };
 
   this.config = config;
-  console.log(this.config);
+
 
   return this;
 }
