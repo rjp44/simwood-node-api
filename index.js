@@ -1,6 +1,15 @@
 const request = require('request-promise-native');
+const 
+er = require('./server');
 
-const runServer = require('./server');
+function init(config) {
+	this.stub = 'https://api.simwood.com/v3';
+	this.types = {
+		NUMBERS: 'numbers',
+		ACCOUNT: 'accounts',
+		FILES: 'files',
+		MESSAGING: 'messaging'
+	};
 
 function init(config) {
   this.stub = 'https://api.simwood.com/v3';
@@ -144,11 +153,11 @@ function numberDelete(number, SETTINGS = this) {
   });
 }
 
-function messagingSmsSend(from, to, text, options = {}, SETTINGS = this) {
+function messagingSmsSend(number_from, number_to, text, options = {}, SETTINGS = this) {
   return new Promise(function (resolve, reject) {
     const message = {
-      from,
-      to,
+      number_from,
+      number_to,
       message: text,
       ...options
     };
@@ -237,4 +246,5 @@ module.exports = {
   numberConfigureRedirectPSTN,
   numberConfigureSmsReceive,
   numberConfigureBusy
+
 }
